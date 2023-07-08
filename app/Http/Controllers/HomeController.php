@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HistoricalDataRequest;
+use App\Jobs\SendEmailJob;
 use App\Models\CompanySymbolList;
 use App\Services\CompanySymbolService;
 use App\Services\HistoricalDataApiService;
@@ -45,7 +47,7 @@ class HomeController extends Controller
 
     }
 
-    public function historicalQuotes(Request $request)
+    public function historicalQuotes(HistoricalDataRequest $request)
     {
         $historicalQuotes = $this->historicalDataApiService->getData(
                             $request->symbol,$request->start_date,$request->end_date);
@@ -62,6 +64,7 @@ class HomeController extends Controller
             $opens[$key]  = $value['open'];
             $closes[$key] = $value['close'];
         }
+        dispatch(new SendEmailJob($request->email , $historicalQuotes, $request->start_date,$request->end_date,$companyName));
 
         return view('historical_quotes.index', compact('historicalQuotes' ,
         'companyName' , 'dates', 'opens' , 'closes' ));

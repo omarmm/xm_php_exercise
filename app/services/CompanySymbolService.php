@@ -25,14 +25,12 @@ public function __construct() {
 }
 
 public function getCompanySymbolList($request){
-  // $this->storeCompanySymbolListDb();
   $q = trim($request->q);
   $symbols = CompanySymbolList::where('id','like','%'.$q.'%')
       ->where('text', 'LIKE',  '%' .$q. '%')
       ->orderBy('text', 'asc')->simplePaginate(10);
 
     if(count($symbols)){
-        //return json_encode(["results"=>CompanySymbolList::where('id','like','%'.$request->q.'%')->orWhere('text','like','%'.$request->q.'%')->get()->toArray()]);
         $morePages=true;
        if (empty($symbols->nextPageUrl())){
         $morePages=false;
@@ -65,7 +63,7 @@ public function storeCompanySymbolListJsonFile(){
 }
 
 
-protected function storeCompanySymbolListDb(){
+public function storeCompanySymbolListDb(){
 
     foreach($this->jsonData as $value)
     {

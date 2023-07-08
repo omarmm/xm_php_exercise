@@ -15,6 +15,21 @@
           <div class="row">
             <!-- centered -->
             <div class="col-md-12">
+              @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if(Session::has('msg'))
+<div class="alert alert-danger" role="alert">
+
+{{ Session::get('msg') }}
+</div>
+@endif
               <!-- general form elements -->
               <div class="card card-info">
                 <div class="card-header">
@@ -41,7 +56,7 @@
 
                         <!-- Date  From-->
                         <div class="form-group">
-                            <label>Date:</label>
+                            <label>Start Date:</label>
                               <div class="input-group date" id="startDate" data-target-input="nearest">
                                   <input type="text" class="form-control datetimepicker-input" data-target="#startDate" name="start_date" data-date-format="YYYY-mm-dd"/>
                                   <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
@@ -60,14 +75,14 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"  name="email">
                       </div>
 
                   <!-- Date  to-->
                   <div class="form-group">
                      <label>End Date:</label>
                        <div class="input-group date" id="endDate" data-target-input="nearest">
-                           <input type="text" class="form-control datetimepicker-input" name="end_date" data-target="#endDate"/>
+                           <input type="text" class="form-control datetimepicker-input" name="end_date" data-target="#endDate" data-date-format="YYYY-mm-dd"/>
                            <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                            </div>
@@ -105,11 +120,6 @@
 
     $(function () {
      
-     //Initialize Select2 Elements
-    // $('.select2bs4').select2({
-    //   theme: 'bootstrap4'
-    // })
-
     $('.select2bs4').select2({
       theme: 'bootstrap4',
     placeholder: 'Select a Symbol',
@@ -127,25 +137,12 @@
       var query = {
         q: params.term,
         page: params.page || 1
-      }
-     
-      // Query parameters will be ?search=[term]&page=[page]
+      }     
       return query;
     }
     },
     });
 
-//     $.ajax({
-//       url      : "{{url("/test-json-file")}}",
-//       dataType : "json",
-// }).then(function (response) {
-//   $(".select2bs4").select2({
-//     placeholder: "Select a Symbol",
-//     minimumInputLength: 3,
-//     data: response
-//   });  
-// });
-    
 
     //     //Date picker
     $('#startDate').datetimepicker({
