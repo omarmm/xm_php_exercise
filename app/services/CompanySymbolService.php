@@ -37,9 +37,9 @@ class CompanySymbolService
      * @param  mixed $request
      * @return JsonResponse
      */
-    public function getCompanySymbolList($request): JsonResponse|string
+    public function getCompanySymbolList($request=null): JsonResponse|string
     {
-        $q = trim($request->q);
+        $q=!is_null($request)?trim($request->q):'';
         $symbols = CompanySymbolList::where('id', 'like', '%' . $q . '%')
             ->where('text', 'LIKE',  '%' . $q . '%')
             ->orderBy('text', 'asc')->simplePaginate(10);
