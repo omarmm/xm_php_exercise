@@ -125,7 +125,7 @@
     placeholder: 'Select a Symbol',
     selectOnClose: false,
     tokenSeparators: [',', ' '],
-    delay: 250,
+   // delay: 250,
     cache: true,
     ajax: {
         dataType : "json",

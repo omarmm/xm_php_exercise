@@ -20,11 +20,18 @@ class HomeController extends Controller
      * @return void
      */
 
-     protected $companySymbolService;
-     protected $historicalDataApiService;
+    protected $companySymbolService;
+    protected $historicalDataApiService;
 
 
-    public function __construct(CompanySymbolService $companySymbolService , HistoricalDataApiService $historicalDataApiService)
+    /**
+     * __construct
+     *
+     * @param  mixed $companySymbolService
+     * @param  mixed $historicalDataApiService
+     * @return void
+     */
+    public function __construct(CompanySymbolService $companySymbolService, HistoricalDataApiService $historicalDataApiService)
     {
         $this->companySymbolService     = $companySymbolService;
         $this->historicalDataApiService = $historicalDataApiService;
@@ -35,38 +42,62 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
-        
+
         return view('home');
     }
 
+    /**
+     * jsonSave
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function jsonSave(Request $request)
     {
         return $this->companySymbolService->getCompanySymbolList($request);
-
     }
 
+    /**
+     * historicalQuotes
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function historicalQuotes(HistoricalDataRequest $request)
     {
         $historicalQuotes = $this->historicalDataApiService->getData(
-                            $request->symbol,$request->start_date,$request->end_date);
+            $request->symbol,
+            $request->start_date,
+            $request->end_date
+        );
         $companyName = CompanySymbolList::find($request->symbol)->company_name;
-        if(!$historicalQuotes){
-            return redirect()->back()->with('msg', 'No records for Company:'.$companyName);
-        }        
-        
+        if (!$historicalQuotes) {
+            return redirect()->back()->with('msg', 'No records for Company:' . $companyName);
+        }
+
         $dates = $opens = $closes = [];
 
-        foreach($historicalQuotes as $key => $value ){
+        foreach ($historicalQuotes as $key => $value) {
 
             $dates[$key]  = $value['date'];
             $opens[$key]  = $value['open'];
             $closes[$key] = $value['close'];
         }
-        dispatch(new SendEmailJob($request->email , $historicalQuotes, $request->start_date,$request->end_date,$companyName));
+        dispatch(new SendEmailJob($request->email, $historicalQuotes, $request->start_date, $request->end_date, $companyName));
 
-        return view('historical_quotes.index', compact('historicalQuotes' ,
-        'companyName' , 'dates', 'opens' , 'closes' ));
+        return view('historical_quotes.index', compact(
+            'historicalQuotes',
+            'companyName',
+            'dates',
+            'opens',
+            'closes'
+        ));
     }
 }
