@@ -13,4 +13,12 @@ class CompanySymbolList extends Model
     public $incrementing = false;
 
     protected $guarded = []; 
+
+    public function getCompanyNameAttribute($value)
+    {
+
+        $pos = strpos($this->text, ':');
+        return substr($this->text, $pos+1);
+    }
+
 }

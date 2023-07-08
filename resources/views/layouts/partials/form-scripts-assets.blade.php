@@ -23,6 +23,8 @@
 <script src="{{ asset('template/') }}/plugins/bs-stepper/js/bs-stepper.min.js"></script>
 <!-- dropzonejs -->
 <script src="{{ asset('template/') }}/plugins/dropzone/min/dropzone.min.js"></script>
+<!-- ChartJS -->
+<script src="{{ asset('template/') }}/plugins/chart.js/Chart.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('template/') }}/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

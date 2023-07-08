@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanySymbolList;
 use App\Services\CompanySymbolService;
+use App\Services\HistoricalDataApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use File;
@@ -17,12 +18,14 @@ class HomeController extends Controller
      * @return void
      */
 
-     protected $CompanySymbolService;
+     protected $companySymbolService;
+     protected $historicalDataApiService;
 
-    public function __construct(CompanySymbolService $CompanySymbolService)
+
+    public function __construct(CompanySymbolService $companySymbolService , HistoricalDataApiService $historicalDataApiService)
     {
-        $this->CompanySymbolService = $CompanySymbolService;
-       // $this->middleware('auth');
+        $this->companySymbolService     = $companySymbolService;
+        $this->historicalDataApiService = $historicalDataApiService;
     }
 
     /**
@@ -38,14 +41,29 @@ class HomeController extends Controller
 
     public function jsonSave(Request $request)
     {
-        return $this->CompanySymbolService->getCompanySymbolList($request);
+        return $this->companySymbolService->getCompanySymbolList($request);
 
     }
 
-    public function historicalQuotes()
+    public function historicalQuotes(Request $request)
     {
-        $symbols = CompanySymbolList::paginate();
+        $historicalQuotes = $this->historicalDataApiService->getData(
+                            $request->symbol,$request->start_date,$request->end_date);
+        $companyName = CompanySymbolList::find($request->symbol)->company_name;
+        if(!$historicalQuotes){
+            return redirect()->back()->with('msg', 'No records for Company:'.$companyName);
+        }        
+        
+        $dates = $opens = $closes = [];
 
-        return view('historical_quotes.index', compact('symbols'));
+        foreach($historicalQuotes as $key => $value ){
+
+            $dates[$key]  = $value['date'];
+            $opens[$key]  = $value['open'];
+            $closes[$key] = $value['close'];
+        }
+
+        return view('historical_quotes.index', compact('historicalQuotes' ,
+        'companyName' , 'dates', 'opens' , 'closes' ));
     }
 }

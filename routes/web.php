@@ -20,7 +20,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('/test-json-file', [App\Http\Controllers\HomeController::class, 'jsonSave'])->name('json.save');
 
-    Route::get('/Company-historical-quotes', [\App\Http\Controllers\HomeController::class, 'historicalQuotes'])->name('historical.quotes');
+    Route::post('/company-historical-quotes', [\App\Http\Controllers\HomeController::class, 'historicalQuotes'])->name('historical.quotes');
 
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');

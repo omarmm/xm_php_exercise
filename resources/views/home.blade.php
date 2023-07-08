@@ -22,7 +22,8 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form  id="form" method="POST" action="{{route('historical.quotes')}}">
+                  @csrf
                   <div class="card-body">
 
                     <div class="row">
@@ -33,7 +34,7 @@
 
                       <div class="form-group">
                         <label>Company Symbol</label>
-                        <select class="form-control  form-control-lg select2bs4" style="width: 100%;">
+                        <select class="form-control  form-control-lg select2bs4" style="width: 100%;" name="symbol">
                         </select>
                       </div>
 
@@ -42,7 +43,7 @@
                         <div class="form-group">
                             <label>Date:</label>
                               <div class="input-group date" id="startDate" data-target-input="nearest">
-                                  <input type="text" class="form-control datetimepicker-input" data-target="#startDate" data-date-format="YYYY-mm-dd"/>
+                                  <input type="text" class="form-control datetimepicker-input" data-target="#startDate" name="start_date" data-date-format="YYYY-mm-dd"/>
                                   <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
                                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                   </div>
@@ -66,7 +67,7 @@
                   <div class="form-group">
                      <label>End Date:</label>
                        <div class="input-group date" id="endDate" data-target-input="nearest">
-                           <input type="text" class="form-control datetimepicker-input" data-target="#endDate"/>
+                           <input type="text" class="form-control datetimepicker-input" name="end_date" data-target="#endDate"/>
                            <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                            </div>
