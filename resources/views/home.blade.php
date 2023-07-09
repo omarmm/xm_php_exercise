@@ -49,7 +49,7 @@
 
                       <div class="form-group">
                         <label>Company Symbol</label>
-                        <select class="form-control  form-control-lg select2bs4" style="width: 100%;" name="symbol">
+                        <select class="form-control  form-control-lg select2bs4" style="width: 100%;" name="symbol" required>
                         </select>
                       </div>
 
@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <label>Start Date:</label>
                               <div class="input-group date" id="startDate" data-target-input="nearest">
-                                  <input type="text" class="form-control datetimepicker-input" data-target="#startDate" name="start_date" data-date-format="YYYY-mm-dd"/>
+                                  <input type="text" class="form-control datetimepicker-input" data-target="#startDate" name="start_date" required data-date-format="YYYY-mm-dd"/>
                                   <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
                                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                   </div>
@@ -75,14 +75,14 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"  name="email">
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"  name="email" required>
                       </div>
 
                   <!-- Date  to-->
                   <div class="form-group">
                      <label>End Date:</label>
                        <div class="input-group date" id="endDate" data-target-input="nearest">
-                           <input type="text" class="form-control datetimepicker-input" name="end_date" data-target="#endDate" data-date-format="YYYY-mm-dd"/>
+                           <input type="text" class="form-control datetimepicker-input" name="end_date" data-target="#endDate" data-date-format="YYYY-mm-dd"/ required>
                            <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                            </div>
@@ -98,7 +98,7 @@
                   <!-- /.card-body -->
   
                   <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" value="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </form>
               </div>

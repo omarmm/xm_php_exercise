@@ -47,13 +47,14 @@
                 <div class="col-lg-12">
 
                     <div class="alert alert-info">
-                        Sample table page
+                      <h5><strong>Historical Data for : {{ $companyName }}</strong>  From {{$startDate}} To {{$endDate}} </h5>
                     </div>
 
                     <div class="card">
                         <div class="card-body p-0">
 
-                            <table class="table">
+                            <table class="table" id="historical-table">
+
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -179,5 +180,23 @@
   
     })
   </script>
+
+<script>
+  $(function () {
+    $("#historical-table").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
 
 @endsection

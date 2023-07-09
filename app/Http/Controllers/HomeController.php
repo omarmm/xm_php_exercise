@@ -91,10 +91,14 @@ class HomeController extends Controller
             $closes[$key] = $value['close'];
         }
         dispatch(new SendEmailJob($request->email, $historicalQuotes, $request->start_date, $request->end_date, $companyName));
+        $startDate = $request->start_date;
+        $endDate   = $request->end_date;
 
         return view('historical_quotes.index', compact(
             'historicalQuotes',
             'companyName',
+            'startDate',
+            'endDate',
             'dates',
             'opens',
             'closes'
