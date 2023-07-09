@@ -18,7 +18,7 @@ class CompanySymbolService
 
 
     protected  $companSymbolListUrl;
-    protected  $jsonData;
+    public  $jsonData;
     protected  $jsonFileName;
     protected  $jsonFileStorePath;
 

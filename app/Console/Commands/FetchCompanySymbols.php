@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\CompanySymbolList;
 use App\Services\CompanySymbolService;
 use Illuminate\Console\Command;
 
@@ -24,7 +25,8 @@ class FetchCompanySymbols extends Command
     protected $companySymbolService;
 
 
-    public function __construct(CompanySymbolService $companySymbolService) {
+    public function __construct(CompanySymbolService $companySymbolService)
+    {
         parent::__construct();
         $this->companySymbolService = $companySymbolService;
     }
@@ -37,6 +39,22 @@ class FetchCompanySymbols extends Command
     public function handle()
     {
         $this->companySymbolService->storeCompanySymbolListJsonFile();
-        $this->companySymbolService->storeCompanySymbolListDb();
+        //$this->companySymbolService->storeCompanySymbolListDb();
+
+        $progressbar = $this->output->createProgressBar(count($this->companySymbolService->jsonData));
+        $progressbar->start();
+        foreach ($this->companySymbolService->jsonData as $value) {
+            CompanySymbolList::firstOrCreate(
+                [
+                    'id'             => $value['Symbol'],
+                ],
+                [
+                    'text'           =>  $value['Symbol'] . '  :  ' . $value['Company Name'],
+                ]
+            );
+            sleep(1);
+            $progressbar->advance();
+        }
+        $progressbar->finish();
     }
 }
