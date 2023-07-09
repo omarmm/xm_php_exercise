@@ -52,7 +52,7 @@ class FetchCompanySymbols extends Command
                     'text'           =>  $value['Symbol'] . '  :  ' . $value['Company Name'],
                 ]
             );
-            sleep(1);
+           // sleep(1);
             $progressbar->advance();
         }
         $progressbar->finish();
